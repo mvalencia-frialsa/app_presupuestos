@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PWA Presupuestos | Mockups UI v5 v3</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            navy: {
+              50: '#EEF3F8',
+              100: '#D9E4EF',
+              200: '#AFC2D6',
+              300: '#829EBA',
+              400: '#5E7D9E',
+              500: '#35536F',
+              600: '#243C55',
+              700: '#182C42',
+              800: '#102235',
+              900: '#0B1726'
+            },
+            olive: {
+              50: '#F3F6ED',
+              100: '#E4E9D5',
+              200: '#C9D4AF',
+              300: '#AEBE89',
+              400: '#92A763',
+              500: '#6F7F3E',
+              600: '#586532',
+              700: '#424C26',
+              800: '#2D341B',
+              900: '#1B2010'
+            },
+            surface: '#F7F8FA',
+            ink: '#18212F'
+          },
+          boxShadow: {
+            soft: '0 18px 45px rgba(11, 23, 38, 0.08)',
+            card: '0 10px 28px rgba(11, 23, 38, 0.06)'
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body { background: #F7F8FA; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .admin-tab-panel { display: none; }
+    .admin-tab-panel.active { display: block; }
+    .nav-active {
+      background: rgba(111, 127, 62, .14);
+      color: #0B1726;
+      border-color: rgba(111, 127, 62, .35);
+    }
+    .glass {
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(16px);
+    }
+  </style>
+</head>
+
+<body class="min-h-screen text-ink antialiased selection:bg-olive-200 selection:text-navy-900">
+
+  <!-- Toast container -->
+  <div id="toastContainer" class="fixed right-5 top-5 z-[100] flex w-[92vw] max-w-sm flex-col gap-3"></div>
+
+  <!-- LOGIN -->
+  <section id="loginScreen" class="min-h-screen bg-[radial-gradient(circle_at_top_left,_#E4E9D5,_transparent_36%),radial-gradient(circle_at_bottom_right,_#D9E4EF,_transparent_35%),#F7F8FA]">
+    <div class="mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center gap-10 px-6 py-10 lg:grid-cols-2 lg:px-10">
+      <div class="hidden lg:block">
+        <div class="mb-8 inline-flex items-center gap-3 rounded-full border border-white/80 bg-white/70 px-4 py-2 text-sm font-medium text-navy-700 shadow-card">
+          <span class="h-2.5 w-2.5 rounded-full bg-olive-500"></span>
+          PWA interna · Presupuestos y aprobaciones
+        </div>
+        <h1 class="max-w-xl text-5xl font-semibold tracking-tight text-navy-900">
+          Control presupuestal con trazabilidad de aprobación, proyectos y tickets.
+        </h1>
+        <p class="mt-5 max-w-lg text-lg leading-8 text-slate-600">
+          Mockup visual para capturar presupuestos, validarlos, enviarlos a aprobación por área y conservar la relación con proyectos y Mesa de Ayuda.
+        </p>
+
+        <div class="mt-10 grid max-w-xl grid-cols-2 gap-4">
+          <div class="rounded-3xl border border-white bg-white/80 p-5 shadow-card">
+            <p class="text-sm text-slate-500">Presupuestos activos</p>
+            <p class="mt-3 text-3xl font-semibold text-navy-900">248</p>
+            <p class="mt-2 text-sm text-olive-700">+12% vs mes anterior</p>
+          </div>
+          <div class="rounded-3xl border border-white bg-white/80 p-5 shadow-card">
+            <p class="text-sm text-slate-500">Aprobación promedio</p>
+            <p class="mt-3 text-3xl font-semibold text-navy-900">1.8 días</p>
+            <p class="mt-2 text-sm text-blue-700">Flujo de un nivel</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mx-auto w-full max-w-md">
+        <div class="rounded-[2rem] border border-white bg-white p-7 shadow-soft">
+          <div class="mb-8 flex items-center justify-between">
+            <div>
+              <div class="mb-3 flex h-12 w-12 items-center justify-center rounded-2xl bg-navy-900 text-lg font-bold text-white">P</div>
+              <h2 class="text-2xl font-semibold text-navy-900">Bienvenido</h2>
+              <p class="mt-1 text-sm text-slate-500">Accede al sistema de presupuestos.</p>
+            </div>
+            <span class="rounded-full bg-olive-50 px-3 py-1 text-xs font-semibold text-olive-700">Modo claro</span>
+          </div>
+
+          <div class="space-y-5">
+            <button type="button" onclick="enterApp(); showToast('success','Acceso correcto','Sesión iniciada correctamente.')" class="flex w-full items-center justify-center gap-3 rounded-2xl bg-navy-900 px-5 py-3.5 text-sm font-semibold text-white shadow-card transition hover:-translate-y-0.5 hover:bg-navy-800 active:translate-y-0">
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-white/10 text-xs font-bold">ID</span>
+              Ingresar con cuenta corporativa
+            </button>
+
+            <div class="flex items-center justify-center gap-2 text-xs text-slate-500">
+              <span class="h-2 w-2 rounded-full bg-blue-500"></span>
+              Acceso protegido con MFA
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP SHELL -->
+  <section id="appShell" class="hidden min-h-screen">
+    <!-- Sidebar -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-40 hidden w-72 border-r border-slate-200 bg-white px-4 py-5 lg:block">
+      <div class="mb-8 flex items-center gap-3 px-2">
+        <div class="flex h-11 w-11 items-center justify-center rounded-2xl bg-navy-900 font-bold text-white">P</div>
+        <div>
+          <p class="font-semibold text-navy-900">Presupuestos</p>
+          <p class="text-xs text-slate-500">Captura y aprobación</p>
+        </div>
+      </div>
+
+      <nav class="space-y-2">
+        <button data-page="dashboardPage" class="nav-link nav-active flex w-full items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-left text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+          <span>▣</span> Panel principal
+        </button>
+        <button data-page="budgetsPage" class="nav-link flex w-full items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-left text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+          <span>▤</span> Mis presupuestos
+        </button>
+        <button data-page="capturePage" class="nav-link flex w-full items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-left text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+          <span>＋</span> Captura manual
+        </button>
+        <button data-page="bulkPage" class="nav-link flex w-full items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-left text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+          <span>⇧</span> Carga masiva
+        </button>
+        <button data-page="approvalPage" class="nav-link flex w-full items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-left text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+          <span>✓</span> Aprobaciones
+        </button>
+        <button data-page="adminPage" class="nav-link flex w-full items-center gap-3 rounded-2xl border border-transparent px-4 py-3 text-left text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+          <span>⚙</span> Administración
+        </button>
+      </nav>
+
+      <div class="absolute bottom-5 left-4 right-4 rounded-3xl bg-navy-900 p-4 text-white">
+        <p class="text-sm font-semibold">MVP activo</p>
+        <p class="mt-1 text-xs leading-5 text-white/70">Flujo base: borrador → aprobación → ticket.</p>
+        <button onclick="showToast('info','Checklist MVP','Siguiente: conectar datos reales desde FastAPI + PostgreSQL.')" class="mt-4 w-full rounded-2xl bg-white/10 px-3 py-2 text-xs font-semibold transition hover:bg-white/20">
+          Ver checklist
+        </button>
+      </div>
+    </aside>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-30 border-b border-slate-200 glass lg:ml-72">
+      <div class="flex h-20 items-center justify-between px-5 lg:px-8">
+        <div class="flex items-center gap-3">
+          <button class="rounded-2xl border border-slate-200 bg-white px-3 py-2 lg:hidden" onclick="showToast('info','Menú móvil','En el prototipo el menú móvil se representa como navegación superior.')">☰</button>
+          <div>
+            <p class="text-xs font-semibold uppercase tracking-[.18em] text-olive-600">PWA Presupuestos</p>
+            <h1 id="pageTitle" class="text-xl font-semibold text-navy-900">Panel principal</h1>
+          </div>
+        </div>
+
+        <div class="hidden flex-1 justify-center px-8 md:flex">
+          <div class="relative w-full max-w-lg">
+            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">⌕</span>
+            <input class="w-full rounded-2xl border border-slate-200 bg-white px-11 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Buscar folio, área, proveedor o proyecto..." />
+          </div>
+        </div>
+
+        <div class="relative">
+          <button onclick="toggleProfile()" class="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white px-3 py-2 transition hover:bg-slate-50">
+            <div class="h-9 w-9 rounded-xl bg-olive-600 text-center text-sm font-semibold leading-9 text-white">MV</div>
+            <div class="hidden text-left sm:block">
+              <p class="text-sm font-semibold text-navy-900">Michel Valencia</p>
+              <p class="text-xs text-slate-500">Administrador</p>
+            </div>
+            <span class="text-slate-400">⌄</span>
+          </button>
+
+          <div id="profileMenu" class="absolute right-0 mt-3 hidden w-56 rounded-2xl border border-slate-200 bg-white p-2 shadow-soft">
+            <button class="w-full rounded-xl px-3 py-2 text-left text-sm hover:bg-slate-50">Mi perfil</button>
+            <button class="w-full rounded-xl px-3 py-2 text-left text-sm hover:bg-slate-50">Preferencias</button>
+            <button onclick="logout()" class="w-full rounded-xl px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50">Cerrar sesión</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile nav chips -->
+      <div class="flex gap-2 overflow-x-auto px-5 pb-4 lg:hidden">
+        <button data-page="dashboardPage" class="nav-link nav-active whitespace-nowrap rounded-full border border-transparent px-4 py-2 text-sm font-medium">Panel</button>
+        <button data-page="budgetsPage" class="nav-link whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-medium">Presupuestos</button>
+        <button data-page="capturePage" class="nav-link whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-medium">Captura</button>
+        <button data-page="bulkPage" class="nav-link whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-medium">Carga</button>
+        <button data-page="approvalPage" class="nav-link whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-medium">Aprobaciones</button>
+        <button data-page="adminPage" class="nav-link whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-sm font-medium">Admin</button>
+      </div>
+    </header>
+
+    <main class="lg:ml-72">
+      <div class="mx-auto max-w-7xl px-5 py-8 lg:px-8">
+
+        <!-- DASHBOARD -->
+        <section id="dashboardPage" class="page active">
+          <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p class="text-sm font-medium text-slate-500">Vista general</p>
+              <h2 class="mt-1 text-3xl font-semibold tracking-tight text-navy-900">Dashboard / Panel principal</h2>
+            </div>
+            <div class="flex gap-3">
+              <button onclick="showToast('info','Reporte','Exportación simulada para Power BI.')" class="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-navy-800 transition hover:border-olive-300 hover:bg-olive-50">Exportar</button>
+              <button data-page="capturePage" class="nav-link rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-800">Nuevo presupuesto</button>
+            </div>
+          </div>
+
+          <section class="mb-6 rounded-3xl border border-slate-200 bg-white p-5 shadow-card">
+            <div class="mb-4 flex flex-col justify-between gap-3 md:flex-row md:items-center">
+              <div>
+                <h3 class="text-lg font-semibold text-navy-900">Accesos rápidos del mockup</h3>
+                <p class="text-sm text-slate-500">Usa estos accesos para revisar las pantallas principales sin buscarlas en el menú lateral.</p>
+              </div>
+              <span class="rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700">Prototipo navegable</span>
+            </div>
+            <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+              <button data-page="adminPage" class="nav-link group rounded-3xl border border-slate-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-olive-300 hover:bg-olive-50">
+                <p class="text-sm font-semibold text-navy-900">Panel de Administración</p>
+                <p class="mt-2 text-sm text-slate-500">Usuarios, roles, permisos y configuración general.</p>
+                <p class="mt-4 text-sm font-semibold text-olive-700">Abrir →</p>
+              </button>
+              <button data-page="capturePage" class="nav-link group rounded-3xl border border-slate-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-olive-300 hover:bg-olive-50">
+                <p class="text-sm font-semibold text-navy-900">Formulario de captura</p>
+                <p class="mt-2 text-sm text-slate-500">Alta manual de presupuesto y proyecto asociado.</p>
+                <p class="mt-4 text-sm font-semibold text-olive-700">Abrir →</p>
+              </button>
+              <button data-page="bulkPage" class="nav-link group rounded-3xl border border-slate-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-olive-300 hover:bg-olive-50">
+                <p class="text-sm font-semibold text-navy-900">Carga masiva</p>
+                <p class="mt-2 text-sm text-slate-500">Validación backend y errores por fila/columna.</p>
+                <p class="mt-4 text-sm font-semibold text-olive-700">Abrir →</p>
+              </button>
+              <button data-page="approvalPage" class="nav-link group rounded-3xl border border-slate-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-olive-300 hover:bg-olive-50">
+                <p class="text-sm font-semibold text-navy-900">Aprobaciones</p>
+                <p class="mt-2 text-sm text-slate-500">Revisión, aprobación o rechazo por área.</p>
+                <p class="mt-4 text-sm font-semibold text-olive-700">Abrir →</p>
+              </button>
+            </div>
+          </section>
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-card">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm text-slate-500">Total presupuestado</p>
+                  <p class="mt-3 text-3xl font-semibold text-navy-900">$18.4M</p>
+                </div>
+                <span class="rounded-2xl bg-navy-50 px-3 py-1 text-xs font-semibold text-navy-700">2026</span>
+              </div>
+              <p class="mt-4 text-sm text-olive-700">▲ 8.2% vs periodo anterior</p>
+            </article>
+
+            <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-card">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm text-slate-500">En aprobación</p>
+                  <p class="mt-3 text-3xl font-semibold text-navy-900">16</p>
+                </div>
+                <span class="rounded-2xl bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-700">En proceso</span>
+              </div>
+              <p class="mt-4 text-sm text-slate-500">Tiempo promedio: 1.8 días</p>
+            </article>
+
+            <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-card">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm text-slate-500">Aprobados</p>
+                  <p class="mt-3 text-3xl font-semibold text-navy-900">74</p>
+                </div>
+                <span class="rounded-2xl bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">Success</span>
+              </div>
+              <p class="mt-4 text-sm text-green-700">Tickets generados: 69</p>
+            </article>
+
+            <article class="rounded-3xl border border-slate-200 bg-white p-5 shadow-card">
+              <div class="flex items-start justify-between">
+                <div>
+                  <p class="text-sm text-slate-500">Rechazados</p>
+                  <p class="mt-3 text-3xl font-semibold text-navy-900">5</p>
+                </div>
+                <span class="rounded-2xl bg-red-50 px-3 py-1 text-xs font-semibold text-red-700">Error</span>
+              </div>
+              <p class="mt-4 text-sm text-slate-500">Requieren corrección</p>
+            </article>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 gap-6 xl:grid-cols-3">
+            <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card xl:col-span-2">
+              <div class="mb-6 flex items-center justify-between">
+                <div>
+                  <h3 class="text-lg font-semibold text-navy-900">Presupuesto por área</h3>
+                  <p class="text-sm text-slate-500">Gráfica simulada con barras responsivas.</p>
+                </div>
+                <select class="rounded-2xl border border-slate-200 bg-white px-3 py-2 text-sm outline-none hover:bg-slate-50">
+                  <option>2026</option>
+                  <option>2025</option>
+                </select>
+              </div>
+              <div class="space-y-5">
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>Sistemas</span><span class="font-semibold">$5.8M</span></div>
+                  <div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[82%] rounded-full bg-navy-700"></div></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>Operaciones</span><span class="font-semibold">$4.2M</span></div>
+                  <div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[64%] rounded-full bg-olive-600"></div></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>Mantenimiento</span><span class="font-semibold">$3.1M</span></div>
+                  <div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[48%] rounded-full bg-navy-500"></div></div>
+                </div>
+                <div>
+                  <div class="mb-2 flex justify-between text-sm"><span>Administración</span><span class="font-semibold">$1.4M</span></div>
+                  <div class="h-3 rounded-full bg-slate-100"><div class="h-3 w-[28%] rounded-full bg-olive-400"></div></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+              <h3 class="text-lg font-semibold text-navy-900">Actividad reciente</h3>
+              <div class="mt-5 space-y-4">
+                <div class="flex gap-3">
+                  <span class="mt-1 h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+                  <div>
+                    <p class="text-sm font-medium text-navy-900">PRE-0024 enviado a aprobación</p>
+                    <p class="text-xs text-slate-500">Hace 12 min · Sistemas</p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <span class="mt-1 h-2.5 w-2.5 rounded-full bg-green-500"></span>
+                  <div>
+                    <p class="text-sm font-medium text-navy-900">PRE-0021 aprobado</p>
+                    <p class="text-xs text-slate-500">Ticket HD-88921 generado</p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <span class="mt-1 h-2.5 w-2.5 rounded-full bg-yellow-500"></span>
+                  <div>
+                    <p class="text-sm font-medium text-navy-900">Carga masiva validada</p>
+                    <p class="text-xs text-slate-500">112 válidos · 8 con error</p>
+                  </div>
+                </div>
+                <div class="flex gap-3">
+                  <span class="mt-1 h-2.5 w-2.5 rounded-full bg-red-500"></span>
+                  <div>
+                    <p class="text-sm font-medium text-navy-900">PRE-0018 rechazado</p>
+                    <p class="text-xs text-slate-500">Motivo: centro de costo inválido</p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- BUDGETS LIST -->
+        <section id="budgetsPage" class="page">
+          <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p class="text-sm font-medium text-slate-500">Consulta y seguimiento</p>
+              <h2 class="mt-1 text-3xl font-semibold tracking-tight text-navy-900">Mis presupuestos</h2>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <button data-page="bulkPage" class="nav-link rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-navy-800 hover:bg-slate-50">Carga masiva</button>
+              <button data-page="capturePage" class="nav-link rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-800">+ Nuevo</button>
+            </div>
+          </div>
+
+          <div class="mb-5 grid grid-cols-1 gap-3 rounded-3xl border border-slate-200 bg-white p-4 shadow-card md:grid-cols-4">
+            <select class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+              <option>Todos los estados</option>
+              <option>Borrador</option>
+              <option>En aprobación</option>
+              <option>Aprobado</option>
+              <option>Rechazado</option>
+            </select>
+            <select class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+              <option>Todas las áreas</option>
+              <option>Sistemas</option>
+              <option>Operaciones</option>
+              <option>Mantenimiento</option>
+            </select>
+            <select class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+              <option>2026</option>
+              <option>2025</option>
+            </select>
+            <input class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Buscar folio o concepto..." />
+          </div>
+
+          <div class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card">
+            <div class="overflow-x-auto">
+              <table class="min-w-[1120px] w-full text-left text-sm">
+                <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+                  <tr>
+                    <th class="px-5 py-4">Folio</th>
+                    <th class="px-5 py-4">Área</th>
+                    <th class="px-5 py-4">Concepto</th>
+                    <th class="px-5 py-4">Monto</th>
+                    <th class="px-5 py-4">Proyecto</th>
+                    <th class="px-5 py-4">Estado</th>
+                    <th class="px-5 py-4">Acciones disponibles</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                  <tr class="transition hover:bg-slate-50">
+                    <td class="px-5 py-4 font-semibold text-navy-900">PRE-0024</td>
+                    <td class="px-5 py-4">Sistemas</td>
+                    <td class="px-5 py-4">Licencias Microsoft</td>
+                    <td class="px-5 py-4">$180,000</td>
+                    <td class="px-5 py-4">No</td>
+                    <td class="px-5 py-4"><span class="rounded-full bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-700">En aprobación</span></td>
+                    <td class="px-5 py-4">
+                      <div class="flex flex-wrap gap-2">
+                        <button onclick="openBudgetDetail()" class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-navy-700 hover:bg-slate-50">Ver</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="No editable en aprobación">Editar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Ya fue enviado">Enviar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Solo se cancela en borrador">Cancelar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Ticket disponible solo al aprobar">Ver ticket</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="transition hover:bg-slate-50">
+                    <td class="px-5 py-4 font-semibold text-navy-900">PRE-0023</td>
+                    <td class="px-5 py-4">Operaciones</td>
+                    <td class="px-5 py-4">Proyecto monitoreo cámaras</td>
+                    <td class="px-5 py-4">$520,000</td>
+                    <td class="px-5 py-4">Sí</td>
+                    <td class="px-5 py-4"><span class="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">Aprobado</span></td>
+                    <td class="px-5 py-4">
+                      <div class="flex flex-wrap gap-2">
+                        <button onclick="openBudgetDetail()" class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-navy-700 hover:bg-slate-50">Ver</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="No editable después de aprobar">Editar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Ya fue aprobado">Enviar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="No se cancela aprobado">Cancelar</button>
+                        <button onclick="openBudgetDetail()" class="rounded-xl bg-olive-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-olive-700">Ver ticket</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="transition hover:bg-slate-50">
+                    <td class="px-5 py-4 font-semibold text-navy-900">PRE-0022</td>
+                    <td class="px-5 py-4">Mantenimiento</td>
+                    <td class="px-5 py-4">Refacciones montacargas</td>
+                    <td class="px-5 py-4">$96,500</td>
+                    <td class="px-5 py-4">No</td>
+                    <td class="px-5 py-4"><span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700">Borrador</span></td>
+                    <td class="px-5 py-4">
+                      <div class="flex flex-wrap gap-2">
+                        <button onclick="openBudgetDetail()" class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-navy-700 hover:bg-slate-50">Ver</button>
+                        <button data-page="capturePage" class="nav-link rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-navy-700 hover:bg-slate-50">Editar</button>
+                        <button onclick="showToast('info','Enviado a aprobación','El presupuesto quedó bloqueado para edición.')" class="rounded-xl bg-navy-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-navy-800">Enviar</button>
+                        <button onclick="showToast('warning','Presupuesto cancelado','La cancelación aplica únicamente en estado borrador.')" class="rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100">Cancelar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Sin ticket hasta aprobar">Ver ticket</button>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr class="transition hover:bg-slate-50">
+                    <td class="px-5 py-4 font-semibold text-navy-900">PRE-0021</td>
+                    <td class="px-5 py-4">Administración</td>
+                    <td class="px-5 py-4">Equipo de oficina</td>
+                    <td class="px-5 py-4">$42,000</td>
+                    <td class="px-5 py-4">No</td>
+                    <td class="px-5 py-4"><span class="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-700">Rechazado</span></td>
+                    <td class="px-5 py-4">
+                      <div class="flex flex-wrap gap-2">
+                        <button onclick="openBudgetDetail()" class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-navy-700 hover:bg-slate-50">Ver</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Rechazado: usar duplicar/corregir en flujo posterior">Editar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Debe corregirse antes de reenviar">Enviar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Ya no está en borrador">Cancelar</button>
+                        <button disabled class="cursor-not-allowed rounded-xl border border-slate-200 bg-slate-100 px-3 py-1.5 text-xs font-semibold text-slate-400" title="Sin ticket">Ver ticket</button>
+                        <button onclick="showToast('info','Duplicar presupuesto','Se crearía un nuevo borrador con base en PRE-0021.')" class="rounded-xl border border-olive-200 bg-olive-50 px-3 py-1.5 text-xs font-semibold text-olive-700 hover:bg-olive-100">Duplicar</button>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- CAPTURE FORM -->
+        <section id="capturePage" class="page">
+          <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p class="text-sm font-medium text-slate-500">Captura manual</p>
+              <h2 class="mt-1 text-3xl font-semibold tracking-tight text-navy-900">Nuevo presupuesto</h2>
+            </div>
+            <div class="flex flex-wrap gap-3">
+              <button data-page="budgetsPage" class="nav-link rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-navy-800 hover:bg-slate-50">← Atrás</button>
+              <button onclick="showToast('warning','Captura cancelada','Se descartaría la captura actual y regresarías al listado.'); showPage('budgetsPage');" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-700 hover:bg-red-100">Cancelar</button>
+              <button onclick="showToast('success','Borrador guardado','El presupuesto se guardó como borrador.')" class="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-navy-800 hover:bg-slate-50">Guardar borrador</button>
+              <button onclick="showToast('info','Enviado a aprobación','El presupuesto quedó bloqueado para edición.')" class="rounded-2xl bg-olive-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-olive-700">Enviar a aprobación</button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+            <form class="space-y-6 xl:col-span-2">
+              <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+                <div class="mb-5 flex items-center justify-between">
+                  <div>
+                    <h3 class="text-lg font-semibold text-navy-900">Información general</h3>
+                    <p class="text-sm text-slate-500">Campos principales del presupuesto.</p>
+                  </div>
+                  <span class="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">Borrador</span>
+                </div>
+
+                <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Área solicitante *</label>
+                    <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100">
+                      <option>Sistemas</option><option>Operaciones</option><option>Mantenimiento</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Centro de costo *</label>
+                    <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Ej. CC-1201" />
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Año presupuestal *</label>
+                    <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100">
+                      <option>2026</option><option>2027</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Monto estimado *</label>
+                    <input type="number" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="$0.00" />
+                  </div>
+                  <div class="md:col-span-2">
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Concepto *</label>
+                    <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Ej. Renovación de licencias Microsoft" />
+                  </div>
+                  <div class="md:col-span-2">
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Descripción</label>
+                    <textarea rows="4" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Describe el objetivo, alcance y justificación del presupuesto."></textarea>
+                  </div>
+                </div>
+              </section>
+
+              <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+                <h3 class="text-lg font-semibold text-navy-900">Clasificación</h3>
+                <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-3">
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Tipo de gasto</label>
+                    <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+                      <option>CAPEX</option><option>OPEX</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Categoría</label>
+                    <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+                      <option>Hardware</option><option>Software</option><option>Servicios</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Prioridad</label>
+                    <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+                      <option>Media</option><option>Alta</option><option>Baja</option>
+                    </select>
+                  </div>
+                </div>
+              </section>
+
+              <section class="rounded-3xl border border-olive-200 bg-olive-50/70 p-6">
+                <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                  <div>
+                    <h3 class="text-lg font-semibold text-navy-900">¿Este presupuesto pertenece a un proyecto?</h3>
+                    <p class="text-sm text-slate-600">Al marcarlo, se solicitarán datos adicionales del proyecto y distribución estimada.</p>
+                  </div>
+                  <button type="button" onclick="openProjectModal()" class="rounded-2xl bg-navy-900 px-4 py-3 text-sm font-semibold text-white hover:bg-navy-800">Registrar proyecto</button>
+                </div>
+              </section>
+
+              <section class="sticky bottom-4 z-10 rounded-3xl border border-slate-200 bg-white/95 p-4 shadow-soft backdrop-blur">
+                <div class="flex flex-col justify-between gap-3 md:flex-row md:items-center">
+                  <p class="text-sm text-slate-500">Acciones de captura</p>
+                  <div class="flex flex-wrap gap-3">
+                    <button type="button" onclick="showToast('warning','Captura cancelada','Se descartaría la captura actual y regresarías al listado.'); showPage('budgetsPage');" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-2.5 text-sm font-semibold text-red-700 hover:bg-red-100">Cancelar</button>
+                    <button type="button" onclick="showToast('success','Borrador guardado','El presupuesto se guardó como borrador.')" class="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-navy-800 hover:bg-slate-50">Guardar borrador</button>
+                    <button type="button" onclick="showToast('info','Enviado a aprobación','El presupuesto quedó bloqueado para edición.')" class="rounded-2xl bg-olive-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-olive-700">Enviar a aprobación</button>
+                  </div>
+                </div>
+              </section>
+            </form>
+
+            <aside class="space-y-6">
+              <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+                <h3 class="text-lg font-semibold text-navy-900">Resumen</h3>
+                <dl class="mt-5 space-y-4 text-sm">
+                  <div class="flex justify-between gap-4"><dt class="text-slate-500">Estado</dt><dd class="font-semibold">Borrador</dd></div>
+                  <div class="flex justify-between gap-4"><dt class="text-slate-500">Editable</dt><dd class="font-semibold text-green-700">Sí</dd></div>
+                  <div class="flex justify-between gap-4"><dt class="text-slate-500">Proyecto</dt><dd class="font-semibold">Pendiente</dd></div>
+                  <div class="flex justify-between gap-4"><dt class="text-slate-500">Ticket</dt><dd class="font-semibold text-slate-500">No aplica aún</dd></div>
+                </dl>
+              </section>
+
+              <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+                <h3 class="text-lg font-semibold text-navy-900">Reglas visibles</h3>
+                <ul class="mt-4 space-y-3 text-sm text-slate-600">
+                  <li>• Después de enviar a aprobación, no se puede editar.</li>
+                  <li>• La cancelación solo aplica en borrador.</li>
+                  <li>• Al aprobarse, se intenta crear ticket.</li>
+                  <li>• El ticket queda ligado al presupuesto para análisis.</li>
+                </ul>
+              </section>
+            </aside>
+          </div>
+        </section>
+
+        <!-- BULK UPLOAD -->
+        <section id="bulkPage" class="page">
+          <div class="mb-6">
+            <p class="text-sm font-medium text-slate-500">Excel / CSV</p>
+            <h2 class="mt-1 text-3xl font-semibold tracking-tight text-navy-900">Carga masiva</h2>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 xl:grid-cols-3">
+            <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card xl:col-span-2">
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="rounded-3xl border border-slate-200 p-5">
+                  <p class="text-sm font-semibold text-navy-900">1. Descargar plantilla</p>
+                  <p class="mt-2 text-sm text-slate-500">Incluye columnas esperadas y catálogos.</p>
+                  <button onclick="showToast('info','Plantilla','Descarga simulada de plantilla Excel.')" class="mt-5 rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">Descargar</button>
+                </div>
+                <div class="rounded-3xl border border-slate-200 p-5">
+                  <p class="text-sm font-semibold text-navy-900">2. Cargar archivo</p>
+                  <p class="mt-2 text-sm text-slate-500">presupuesto_julio.xlsx</p>
+                  <button onclick="showToast('info','Archivo seleccionado','Archivo de ejemplo cargado en el mockup.')" class="mt-5 rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">Seleccionar</button>
+                </div>
+                <div class="rounded-3xl border border-slate-200 p-5">
+                  <p class="text-sm font-semibold text-navy-900">3. Validar backend</p>
+                  <p class="mt-2 text-sm text-slate-500">No se guarda hasta validar.</p>
+                  <button onclick="validateBulk()" class="mt-5 rounded-2xl bg-navy-900 px-4 py-2 text-sm font-semibold text-white hover:bg-navy-800">Validar</button>
+                </div>
+              </div>
+
+              <div id="bulkResults" class="mt-6 hidden">
+                <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+                  <div class="rounded-3xl bg-slate-50 p-5">
+                    <p class="text-sm text-slate-500">Leídos</p>
+                    <p class="mt-2 text-3xl font-semibold text-navy-900">120</p>
+                  </div>
+                  <div class="rounded-3xl bg-green-50 p-5">
+                    <p class="text-sm text-green-700">Válidos</p>
+                    <p class="mt-2 text-3xl font-semibold text-green-800">112</p>
+                  </div>
+                  <div class="rounded-3xl bg-red-50 p-5">
+                    <p class="text-sm text-red-700">Con error</p>
+                    <p class="mt-2 text-3xl font-semibold text-red-800">8</p>
+                  </div>
+                </div>
+
+                <div class="mt-6 overflow-hidden rounded-3xl border border-slate-200">
+                  <table class="min-w-full text-left text-sm">
+                    <thead class="bg-red-50 text-xs uppercase tracking-wider text-red-700">
+                      <tr>
+                        <th class="px-5 py-4">Fila</th>
+                        <th class="px-5 py-4">Columna</th>
+                        <th class="px-5 py-4">Descripción</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white">
+                      <tr><td class="px-5 py-4 font-semibold">5</td><td class="px-5 py-4">Monto</td><td class="px-5 py-4">El monto debe ser mayor a 0.</td></tr>
+                      <tr><td class="px-5 py-4 font-semibold">8</td><td class="px-5 py-4">Área</td><td class="px-5 py-4">El área no existe en catálogo.</td></tr>
+                      <tr><td class="px-5 py-4 font-semibold">15</td><td class="px-5 py-4">Año</td><td class="px-5 py-4">Año presupuestal inválido.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="mt-5 flex flex-wrap gap-3">
+                  <button onclick="showToast('info','Errores','Descarga simulada del archivo con errores.')" class="rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50">Descargar errores</button>
+                  <button onclick="showToast('error','No disponible','Corrige los errores antes de guardar.')" class="rounded-2xl bg-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600">Guardar presupuestos</button>
+                </div>
+              </div>
+            </section>
+
+            <aside class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+              <h3 class="text-lg font-semibold text-navy-900">Validaciones esperadas</h3>
+              <ul class="mt-4 space-y-3 text-sm text-slate-600">
+                <li>• Área debe existir.</li>
+                <li>• Centro de costo requerido.</li>
+                <li>• Monto mayor a 0.</li>
+                <li>• Si es proyecto, debe traer datos mínimos.</li>
+                <li>• Errores por fila, columna y descripción.</li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <!-- APPROVALS -->
+        <section id="approvalPage" class="page">
+          <div class="mb-6 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p class="text-sm font-medium text-slate-500">Flujo de un nivel</p>
+              <h2 class="mt-1 text-3xl font-semibold tracking-tight text-navy-900">Aprobaciones pendientes</h2>
+            </div>
+            <button onclick="showToast('info','Filtro','Mostrando pendientes de tu área.')" class="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold hover:bg-slate-50">Filtrar por mi área</button>
+          </div>
+
+          <div class="grid grid-cols-1 gap-6 xl:grid-cols-5">
+            <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-card xl:col-span-3">
+              <div class="overflow-x-auto">
+                <table class="min-w-full text-left text-sm">
+                  <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+                    <tr>
+                      <th class="px-5 py-4">Folio</th>
+                      <th class="px-5 py-4">Solicitante</th>
+                      <th class="px-5 py-4">Monto</th>
+                      <th class="px-5 py-4">Proyecto</th>
+                      <th class="px-5 py-4">Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    <tr class="hover:bg-slate-50">
+                      <td class="px-5 py-4 font-semibold text-navy-900">PRE-0024</td>
+                      <td class="px-5 py-4">Juan Pérez</td>
+                      <td class="px-5 py-4">$180,000</td>
+                      <td class="px-5 py-4">No</td>
+                      <td class="px-5 py-4"><button onclick="selectApproval('PRE-0024', false)" class="font-semibold text-navy-700 hover:text-olive-700">Revisar</button></td>
+                    </tr>
+                    <tr class="hover:bg-slate-50">
+                      <td class="px-5 py-4 font-semibold text-navy-900">PRE-0025</td>
+                      <td class="px-5 py-4">Ana Gómez</td>
+                      <td class="px-5 py-4">$520,000</td>
+                      <td class="px-5 py-4">Sí</td>
+                      <td class="px-5 py-4"><button onclick="selectApproval('PRE-0025', true)" class="font-semibold text-navy-700 hover:text-olive-700">Revisar</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-card xl:col-span-2">
+              <div class="mb-5 flex items-start justify-between">
+                <div>
+                  <h3 id="approvalFolio" class="text-lg font-semibold text-navy-900">PRE-0024</h3>
+                  <p class="text-sm text-slate-500">Revisión de presupuesto</p>
+                </div>
+                <span class="rounded-full bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-700">En proceso</span>
+              </div>
+
+              <div class="space-y-4 rounded-3xl bg-slate-50 p-5 text-sm">
+                <div class="flex justify-between"><span class="text-slate-500">Área</span><span class="font-semibold">Sistemas</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Monto</span><span class="font-semibold">$180,000</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Proyecto</span><span id="approvalProject" class="font-semibold">No</span></div>
+                <div class="flex justify-between"><span class="text-slate-500">Editable</span><span class="font-semibold text-red-700">No</span></div>
+              </div>
+
+              <label class="mb-2 mt-5 block text-sm font-medium text-slate-700">Comentarios del aprobador</label>
+              <textarea rows="4" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Agrega un comentario para auditoría..."></textarea>
+
+              <div class="mt-5 grid grid-cols-2 gap-3">
+                <button onclick="showToast('error','Presupuesto rechazado','Se registró el motivo del rechazo.')" class="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-700 hover:bg-red-100">Rechazar</button>
+                <button onclick="showToast('success','Presupuesto aprobado','Se intentará generar ticket en Mesa de Ayuda.')" class="rounded-2xl bg-olive-600 px-4 py-3 text-sm font-semibold text-white hover:bg-olive-700">Aprobar</button>
+              </div>
+            </section>
+          </div>
+        </section>
+
+        <!-- ADMIN PANEL -->
+        <section id="adminPage" class="page">
+          <div class="mb-6">
+            <p class="text-sm font-medium text-slate-500">Configuración operativa</p>
+            <h2 class="mt-1 text-3xl font-semibold tracking-tight text-navy-900">Panel de Administración</h2>
+          </div>
+
+          <div class="rounded-3xl border border-slate-200 bg-white p-4 shadow-card">
+            <div class="mb-6 flex flex-wrap gap-2">
+              <button data-tab="usersTab" class="admin-tab rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white">Gestión de usuarios</button>
+              <button data-tab="rolesTab" class="admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">Permisos por usuario</button>
+              <button data-tab="adminApprovalsTab" class="admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">Aprobaciones pendientes</button>
+              <button data-tab="settingsTab" class="admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">Configuración general</button>
+            </div>
+
+            <div id="usersTab" class="admin-tab-panel active">
+              <div class="mb-4 flex flex-col justify-between gap-3 md:flex-row md:items-center">
+                <div>
+                  <h3 class="text-lg font-semibold text-navy-900">Usuarios</h3>
+                  <p class="text-sm text-slate-500">Administración simulada de usuarios internos.</p>
+                </div>
+                <button onclick="showToast('success','Usuario invitado','Se enviaría invitación por correo institucional.')" class="rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-800">+ Invitar usuario</button>
+              </div>
+
+              <div class="overflow-hidden rounded-3xl border border-slate-200">
+                <table class="min-w-full text-left text-sm">
+                  <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+                    <tr><th class="px-5 py-4">Usuario</th><th class="px-5 py-4">Área</th><th class="px-5 py-4">Rol</th><th class="px-5 py-4">Estado</th><th class="px-5 py-4">Acciones</th></tr>
+                  </thead>
+                  <tbody class="divide-y divide-slate-100">
+                    <tr class="hover:bg-slate-50"><td class="px-5 py-4 font-semibold">María López</td><td class="px-5 py-4">Sistemas</td><td class="px-5 py-4">Aprobador</td><td class="px-5 py-4"><span class="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">Activo</span></td><td class="px-5 py-4"><button class="font-semibold text-navy-700">Editar</button></td></tr>
+                    <tr class="hover:bg-slate-50"><td class="px-5 py-4 font-semibold">Juan Pérez</td><td class="px-5 py-4">Operaciones</td><td class="px-5 py-4">Capturista</td><td class="px-5 py-4"><span class="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">Activo</span></td><td class="px-5 py-4"><button class="font-semibold text-navy-700">Editar</button></td></tr>
+                    <tr class="hover:bg-slate-50"><td class="px-5 py-4 font-semibold">Luis Ramos</td><td class="px-5 py-4">Compras</td><td class="px-5 py-4">Consulta</td><td class="px-5 py-4"><span class="rounded-full bg-yellow-50 px-3 py-1 text-xs font-semibold text-yellow-700">Pendiente</span></td><td class="px-5 py-4"><button class="font-semibold text-navy-700">Reenviar</button></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div id="rolesTab" class="admin-tab-panel">
+              <div class="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-center">
+                <div>
+                  <h3 class="text-lg font-semibold text-navy-900">Permisos por usuario</h3>
+                  <p class="mt-1 text-sm text-slate-500">El rol funciona como referencia operativa, pero los accesos se habilitan de forma granular por usuario.</p>
+                </div>
+                <button onclick="showToast('success','Permisos guardados','La matriz de permisos quedó actualizada en el mockup.')" class="rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-800">Guardar permisos</button>
+              </div>
+
+              <div class="mb-5 grid grid-cols-1 gap-4 md:grid-cols-3">
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5"><p class="text-sm font-semibold text-navy-900">Rol base</p><p class="mt-2 text-sm text-slate-500">Ayuda a clasificar al usuario, pero no limita combinaciones especiales.</p></div>
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5"><p class="text-sm font-semibold text-navy-900">Permisos granulares</p><p class="mt-2 text-sm text-slate-500">Cada permiso define qué puede ver, capturar, aprobar o administrar.</p></div>
+                <div class="rounded-3xl border border-slate-200 bg-slate-50 p-5"><p class="text-sm font-semibold text-navy-900">UI condicionada</p><p class="mt-2 text-sm text-slate-500">El frontend muestra botones, pantallas y acciones según permisos activos.</p></div>
+              </div>
+
+              <div class="overflow-hidden rounded-3xl border border-slate-200">
+                <div class="overflow-x-auto">
+                  <table class="min-w-[1180px] w-full text-left text-sm">
+                    <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500">
+                      <tr>
+                        <th class="px-5 py-4">Usuario</th>
+                        <th class="px-5 py-4">Rol base</th>
+                        <th class="px-5 py-4">Ver propios</th>
+                        <th class="px-5 py-4">Capturar</th>
+                        <th class="px-5 py-4">Carga masiva</th>
+                        <th class="px-5 py-4">Ver área</th>
+                        <th class="px-5 py-4">Aprobar área</th>
+                        <th class="px-5 py-4">Ver todos</th>
+                        <th class="px-5 py-4">Admin catálogos</th>
+                        <th class="px-5 py-4">Usuarios</th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 bg-white">
+                      <tr class="hover:bg-slate-50">
+                        <td class="px-5 py-4"><p class="font-semibold text-navy-900">María López</p><p class="text-xs text-slate-500">maria.lopez@empresa.com</p></td>
+                        <td class="px-5 py-4"><select class="rounded-xl border border-slate-200 px-3 py-2 text-xs outline-none focus:ring-4 focus:ring-navy-100"><option>Aprobador</option><option>Capturista</option><option>Administrador</option></select></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                      </tr>
+                      <tr class="hover:bg-slate-50">
+                        <td class="px-5 py-4"><p class="font-semibold text-navy-900">Juan Pérez</p><p class="text-xs text-slate-500">juan.perez@empresa.com</p></td>
+                        <td class="px-5 py-4"><select class="rounded-xl border border-slate-200 px-3 py-2 text-xs outline-none focus:ring-4 focus:ring-navy-100"><option>Capturista</option><option>Aprobador</option><option>Administrador</option></select></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                      </tr>
+                      <tr class="hover:bg-slate-50">
+                        <td class="px-5 py-4"><p class="font-semibold text-navy-900">Luis Ramos</p><p class="text-xs text-slate-500">luis.ramos@empresa.com</p></td>
+                        <td class="px-5 py-4"><select class="rounded-xl border border-slate-200 px-3 py-2 text-xs outline-none focus:ring-4 focus:ring-navy-100"><option>Consulta</option><option>Capturista</option><option>Aprobador</option><option>Administrador</option></select></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                      </tr>
+                      <tr class="hover:bg-slate-50">
+                        <td class="px-5 py-4"><p class="font-semibold text-navy-900">Michel Valencia</p><p class="text-xs text-slate-500">michel.valencia@empresa.com</p></td>
+                        <td class="px-5 py-4"><select class="rounded-xl border border-slate-200 px-3 py-2 text-xs outline-none focus:ring-4 focus:ring-navy-100"><option>Administrador</option><option>Aprobador</option><option>Capturista</option></select></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                        <td class="px-5 py-4"><input checked type="checkbox" class="h-4 w-4 rounded border-slate-300 text-olive-600 focus:ring-olive-500"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="mt-5 rounded-3xl border border-blue-200 bg-blue-50 p-5">
+                <p class="text-sm font-semibold text-blue-800">Ejemplo de permisos que impactan la interfaz</p>
+                <div class="mt-3 grid grid-cols-1 gap-3 text-sm text-blue-800 md:grid-cols-2">
+                  <p>• Si no tiene “Capturar”, se oculta “Nuevo presupuesto”.</p>
+                  <p>• Si no tiene “Aprobar área”, no ve la bandeja de aprobación.</p>
+                  <p>• Si tiene “Ver área”, consulta registros de su área completa.</p>
+                  <p>• Si tiene “Usuarios”, puede administrar accesos.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="adminApprovalsTab" class="admin-tab-panel">
+              <h3 class="text-lg font-semibold text-navy-900">Aprobaciones pendientes por área</h3>
+              <div class="mt-5 grid grid-cols-1 gap-4 md:grid-cols-4">
+                <div class="rounded-3xl bg-yellow-50 p-5"><p class="text-sm text-yellow-700">Sistemas</p><p class="mt-2 text-3xl font-semibold text-yellow-800">6</p></div>
+                <div class="rounded-3xl bg-yellow-50 p-5"><p class="text-sm text-yellow-700">Operaciones</p><p class="mt-2 text-3xl font-semibold text-yellow-800">4</p></div>
+                <div class="rounded-3xl bg-yellow-50 p-5"><p class="text-sm text-yellow-700">Mantenimiento</p><p class="mt-2 text-3xl font-semibold text-yellow-800">3</p></div>
+                <div class="rounded-3xl bg-yellow-50 p-5"><p class="text-sm text-yellow-700">Administración</p><p class="mt-2 text-3xl font-semibold text-yellow-800">2</p></div>
+              </div>
+            </div>
+
+            <div id="settingsTab" class="admin-tab-panel">
+              <h3 class="text-lg font-semibold text-navy-900">Configuración general</h3>
+              <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+                <div>
+                  <label class="mb-2 block text-sm font-medium text-slate-700">API Mesa de Ayuda</label>
+                  <input value="https://api.mesa-ayuda.local/tickets" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm font-medium text-slate-700">Modo de creación de ticket</label>
+                  <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+                    <option>Automático al aprobar</option>
+                    <option>Manual por administrador</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm font-medium text-slate-700">Política de edición</label>
+                  <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+                    <option>Bloquear al enviar a aprobación</option>
+                    <option>Bloquear solo al aprobar</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="mb-2 block text-sm font-medium text-slate-700">Integración Power BI</label>
+                  <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
+                    <option>Consulta directa a PostgreSQL</option>
+                    <option>Dataset programado</option>
+                  </select>
+                </div>
+              </div>
+              <button onclick="showToast('success','Configuración guardada','Los cambios quedaron registrados en el mockup.')" class="mt-6 rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-800">Guardar configuración</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </section>
+
+  <!-- PROJECT MODAL -->
+  <div id="projectModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-navy-900/55 p-4">
+    <div class="max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-soft">
+      <div class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h3 class="text-2xl font-semibold text-navy-900">Registrar proyecto</h3>
+          <p class="mt-1 text-sm text-slate-500">Datos adicionales cuando el presupuesto está ligado a proyecto.</p>
+        </div>
+        <button onclick="closeProjectModal()" class="rounded-2xl border border-slate-200 px-3 py-2 text-slate-500 hover:bg-slate-50">✕</button>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div class="md:col-span-2">
+          <label class="mb-2 block text-sm font-medium text-slate-700">Nombre del proyecto *</label>
+          <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Implementación de sistema de monitoreo" />
+        </div>
+        <div>
+          <label class="mb-2 block text-sm font-medium text-slate-700">Valor estimado *</label>
+          <input value="520000" type="number" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
+        </div>
+        <div>
+          <label class="mb-2 block text-sm font-medium text-slate-700">Proveedor estimado</label>
+          <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Proveedor ABC" />
+        </div>
+        <div>
+          <label class="mb-2 block text-sm font-medium text-slate-700">Fecha propuesta inicio *</label>
+          <input type="date" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
+        </div>
+        <div>
+          <label class="mb-2 block text-sm font-medium text-slate-700">Fecha propuesta fin</label>
+          <input type="date" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
+        </div>
+      </div>
+
+      <div class="mt-6 rounded-3xl bg-slate-50 p-5">
+        <h4 class="font-semibold text-navy-900">Distribución estimada del costo</h4>
+        <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
+          <input value="230000" type="number" class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Hardware" />
+          <input value="210000" type="number" class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Software" />
+          <input value="80000" type="number" class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Servicios / otro" />
+        </div>
+        <div class="mt-4 grid grid-cols-1 gap-3 text-sm md:grid-cols-3">
+          <div class="rounded-2xl bg-white p-4"><p class="text-slate-500">Total distribuido</p><p class="font-semibold text-navy-900">$520,000</p></div>
+          <div class="rounded-2xl bg-white p-4"><p class="text-slate-500">Valor proyecto</p><p class="font-semibold text-navy-900">$520,000</p></div>
+          <div class="rounded-2xl bg-green-50 p-4"><p class="text-green-700">Diferencia</p><p class="font-semibold text-green-800">$0</p></div>
+        </div>
+      </div>
+
+      <div class="mt-6 flex justify-end gap-3">
+        <button onclick="closeProjectModal()" class="rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50">Cancelar</button>
+        <button onclick="closeProjectModal(); showToast('success','Proyecto registrado','El presupuesto quedó marcado como proyecto.')" class="rounded-2xl bg-olive-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-olive-700">Guardar proyecto</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUDGET DETAIL MODAL -->
+  <div id="budgetDetailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-navy-900/55 p-4">
+    <div class="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-soft">
+      <div class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h3 class="text-2xl font-semibold text-navy-900">Presupuesto PRE-0023</h3>
+          <p class="mt-1 text-sm text-slate-500">Vista solo lectura por estado aprobado.</p>
+        </div>
+        <button onclick="closeBudgetDetail()" class="rounded-2xl border border-slate-200 px-3 py-2 text-slate-500 hover:bg-slate-50">✕</button>
+      </div>
+
+      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
+        <div class="rounded-3xl border border-slate-200 p-5">
+          <h4 class="font-semibold text-navy-900">Información general</h4>
+          <dl class="mt-4 space-y-3 text-sm">
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Área</dt><dd class="font-semibold">Operaciones</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Concepto</dt><dd class="font-semibold">Monitoreo cámaras</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Monto</dt><dd class="font-semibold">$520,000</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Estado</dt><dd><span class="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">Aprobado</span></dd></div>
+          </dl>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 p-5">
+          <h4 class="font-semibold text-navy-900">Ticket Mesa de Ayuda</h4>
+          <dl class="mt-4 space-y-3 text-sm">
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Ticket</dt><dd class="font-semibold">HD-88921</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Estado</dt><dd class="font-semibold text-blue-700">Abierto</dd></div>
+            <div class="flex justify-between gap-4"><dt class="text-slate-500">Fecha</dt><dd class="font-semibold">07/07/2026</dd></div>
+          </dl>
+          <button onclick="showToast('info','Mesa de Ayuda','Apertura simulada del ticket HD-88921.')" class="mt-5 rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">Ver ticket</button>
+        </div>
+
+        <div class="rounded-3xl border border-slate-200 p-5 md:col-span-2">
+          <h4 class="font-semibold text-navy-900">Proyecto asociado</h4>
+          <div class="mt-4 grid grid-cols-1 gap-4 text-sm md:grid-cols-4">
+            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Valor estimado</p><p class="font-semibold">$520,000</p></div>
+            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Valor real</p><p class="font-semibold">$430,000</p></div>
+            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Hardware</p><p class="font-semibold">$230,000</p></div>
+            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Software</p><p class="font-semibold">$210,000</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const pageTitles = {
+      dashboardPage: 'Panel principal',
+      budgetsPage: 'Mis presupuestos',
+      capturePage: 'Nuevo presupuesto',
+      bulkPage: 'Carga masiva',
+      approvalPage: 'Aprobaciones',
+      adminPage: 'Administración'
+    };
+
+    function enterApp() {
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('appShell').classList.remove('hidden');
+      showToast('success', 'Bienvenido', 'Accediste al panel principal del mockup.');
+    }
+
+    function logout() {
+      document.getElementById('appShell').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+      document.getElementById('profileMenu').classList.add('hidden');
+    }
+
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      document.getElementById('pageTitle').textContent = pageTitles[pageId] || 'Panel';
+
+      document.querySelectorAll('.nav-link').forEach(btn => {
+        btn.classList.remove('nav-active', 'bg-navy-900', 'text-white');
+      });
+
+      document.querySelectorAll(`.nav-link[data-page="${pageId}"]`).forEach(btn => {
+        btn.classList.add('nav-active');
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    document.addEventListener('click', (event) => {
+      const nav = event.target.closest('.nav-link');
+      if (nav?.dataset.page) showPage(nav.dataset.page);
+
+      const tab = event.target.closest('.admin-tab');
+      if (tab?.dataset.tab) showAdminTab(tab.dataset.tab, tab);
+    });
+
+    function showAdminTab(tabId, activeButton) {
+      document.querySelectorAll('.admin-tab-panel').forEach(panel => panel.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+
+      document.querySelectorAll('.admin-tab').forEach(btn => {
+        btn.className = 'admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50';
+      });
+      activeButton.className = 'admin-tab rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white';
+    }
+
+    function toggleProfile() {
+      document.getElementById('profileMenu').classList.toggle('hidden');
+    }
+
+    function openProjectModal() {
+      const modal = document.getElementById('projectModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('projectModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function openBudgetDetail() {
+      const modal = document.getElementById('budgetDetailModal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeBudgetDetail() {
+      const modal = document.getElementById('budgetDetailModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function validateBulk() {
+      document.getElementById('bulkResults').classList.remove('hidden');
+      showToast('error', 'Validación con errores', 'Se encontraron 8 registros con errores por fila y columna.');
+    }
+
+    function selectApproval(folio, project) {
+      document.getElementById('approvalFolio').textContent = folio;
+      document.getElementById('approvalProject').textContent = project ? 'Sí' : 'No';
+      showToast('info', 'Presupuesto seleccionado', `${folio} cargado para revisión.`);
+    }
+
+    function showToast(type, title, message) {
+      const palette = {
+        info: 'border-blue-200 bg-blue-50 text-blue-800',
+        success: 'border-green-200 bg-green-50 text-green-800',
+        error: 'border-red-200 bg-red-50 text-red-800',
+        warning: 'border-yellow-200 bg-yellow-50 text-yellow-800'
+      };
+
+      const dots = {
+        info: 'bg-blue-500',
+        success: 'bg-green-500',
+        error: 'bg-red-500',
+        warning: 'bg-yellow-500'
+      };
+
+      const toast = document.createElement('div');
+      toast.className = `rounded-2xl border p-4 shadow-soft ${palette[type] || palette.info}`;
+      toast.innerHTML = `
+        <div class="flex gap-3">
+          <span class="mt-1 h-2.5 w-2.5 shrink-0 rounded-full ${dots[type] || dots.info}"></span>
+          <div class="min-w-0">
+            <p class="font-semibold">${title}</p>
+            <p class="mt-1 text-sm opacity-80">${message}</p>
+          </div>
+          <button class="ml-auto opacity-60 hover:opacity-100" onclick="this.closest('div.rounded-2xl').remove()">✕</button>
+        </div>
+      `;
+
+      document.getElementById('toastContainer').appendChild(toast);
+      setTimeout(() => toast.remove(), 5200);
+    }
+  </script>
+</body>
+</html>
