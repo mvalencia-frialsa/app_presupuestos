@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PWA Presupuestos | Mockups UI v5 v3</title>
+  <title>PWA Presupuestos | Frontend demo navegable v7</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -77,10 +77,10 @@
           PWA interna · Presupuestos y aprobaciones
         </div>
         <h1 class="max-w-xl text-5xl font-semibold tracking-tight text-navy-900">
-          Control presupuestal con trazabilidad de aprobación, proyectos y tickets.
+          Control presupuestal con trazabilidad de aprobación, proyectos asociados y ticket de Mesa de Ayuda.
         </h1>
         <p class="mt-5 max-w-lg text-lg leading-8 text-slate-600">
-          Mockup visual para capturar presupuestos, validarlos, enviarlos a aprobación por área y conservar la relación con proyectos y Mesa de Ayuda.
+          Demo navegable para capturar presupuestos, validarlos, enviarlos a aprobación por área y conservar su relación con uno o varios proyectos y con Mesa de Ayuda.
         </p>
 
         
@@ -207,6 +207,7 @@
               <h2 class="mt-1 text-3xl font-semibold tracking-tight text-navy-900">Dashboard / Panel principal</h2>
             </div>
             <div class="flex gap-3">
+              
               <button data-page="capturePage" class="nav-link rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-navy-800">Nuevo presupuesto</button>
             </div>
           </div>
@@ -227,7 +228,7 @@
               </button>
               <button data-page="capturePage" class="nav-link group rounded-3xl border border-slate-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-olive-300 hover:bg-olive-50">
                 <p class="text-sm font-semibold text-navy-900">Formulario de captura</p>
-                <p class="mt-2 text-sm text-slate-500">Alta manual de presupuesto y proyecto asociado.</p>
+                <p class="mt-2 text-sm text-slate-500">Alta manual de presupuesto y proyectos asociados.</p>
                 <p class="mt-4 text-sm font-semibold text-olive-700">Abrir →</p>
               </button>
               <button data-page="bulkPage" class="nav-link group rounded-3xl border border-slate-200 bg-white p-5 text-left transition hover:-translate-y-0.5 hover:border-olive-300 hover:bg-olive-50">
@@ -516,7 +517,9 @@
                   </div>
                   <div>
                     <label class="mb-2 block text-sm font-medium text-slate-700">Centro de costo *</label>
-                    <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Ej. CC-1201" />
+                    <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100">
+                      <option>CC-1201 · Sistemas corporativos</option><option>CC-2204 · Operaciones</option><option>CC-3102 · Mantenimiento</option>
+                    </select>
                   </div>
                   <div>
                     <label class="mb-2 block text-sm font-medium text-slate-700">Año presupuestal *</label>
@@ -528,13 +531,36 @@
                     <label class="mb-2 block text-sm font-medium text-slate-700">Monto estimado *</label>
                     <input type="number" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="$0.00" />
                   </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Moneda *</label>
+                    <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100">
+                      <option>MXN · Peso mexicano</option><option>USD · Dólar estadounidense</option><option>EUR · Euro</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Responsable solicitante</label>
+                    <input readonly value="Michel Valencia" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600" />
+                  </div>
+                  <div>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Fecha de captura</label>
+                    <input readonly value="13/07/2026" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600" />
+                  </div>
                   <div class="md:col-span-2">
                     <label class="mb-2 block text-sm font-medium text-slate-700">Concepto *</label>
                     <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Ej. Renovación de licencias Microsoft" />
+                    <p class="mt-2 text-xs text-slate-500">El presupuesto maneja un solo concepto principal; no se capturan líneas de detalle.</p>
                   </div>
                   <div class="md:col-span-2">
-                    <label class="mb-2 block text-sm font-medium text-slate-700">Descripción</label>
-                    <textarea rows="4" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Describe el objetivo, alcance y justificación del presupuesto."></textarea>
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Descripción *</label>
+                    <textarea rows="3" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Describe el objetivo y alcance del presupuesto."></textarea>
+                  </div>
+                  <div class="md:col-span-2">
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Justificación *</label>
+                    <textarea rows="3" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Explica la necesidad y el beneficio esperado."></textarea>
+                  </div>
+                  <div class="md:col-span-2">
+                    <label class="mb-2 block text-sm font-medium text-slate-700">Observaciones</label>
+                    <textarea rows="2" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none transition focus:border-navy-500 focus:ring-4 focus:ring-navy-100" placeholder="Notas adicionales, supuestos o consideraciones."></textarea>
                   </div>
                 </div>
               </section>
@@ -566,11 +592,22 @@
               <section class="rounded-3xl border border-olive-200 bg-olive-50/70 p-6">
                 <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
                   <div>
-                    <h3 class="text-lg font-semibold text-navy-900">¿Este presupuesto pertenece a un proyecto?</h3>
-                    <p class="text-sm text-slate-600">Al marcarlo, se solicitarán datos adicionales del proyecto y distribución estimada.</p>
+                    <h3 class="text-lg font-semibold text-navy-900">¿Deseas asociar proyectos a este presupuesto?</h3>
+                    <p class="text-sm text-slate-600">Puedes registrar uno o varios proyectos relacionados. Cada proyecto conserva su propia estimación y distribución de costo.</p>
                   </div>
-                  <button type="button" onclick="openProjectModal()" class="rounded-2xl bg-navy-900 px-4 py-3 text-sm font-semibold text-white hover:bg-navy-800">Registrar proyecto</button>
+                  <button type="button" onclick="openProjectModal()" class="rounded-2xl bg-navy-900 px-4 py-3 text-sm font-semibold text-white hover:bg-navy-800">+ Agregar proyecto</button>
                 </div>
+              </section>
+
+              <section id="associatedProjectsSection" class="hidden rounded-3xl border border-slate-200 bg-white p-6 shadow-card">
+                <div class="mb-4 flex items-center justify-between gap-3">
+                  <div>
+                    <h3 class="text-lg font-semibold text-navy-900">Proyectos asociados</h3>
+                    <p class="text-sm text-slate-500">Un presupuesto puede agrupar varios proyectos.</p>
+                  </div>
+                  <span id="associatedProjectsBadge" class="rounded-full bg-olive-50 px-3 py-1 text-xs font-semibold text-olive-700">0 proyectos</span>
+                </div>
+                <div id="associatedProjectsList" class="space-y-3"></div>
               </section>
 
               <section class="sticky bottom-4 z-10 rounded-3xl border border-slate-200 bg-white/95 p-4 shadow-soft backdrop-blur">
@@ -591,7 +628,7 @@
                 <dl class="mt-5 space-y-4 text-sm">
                   <div class="flex justify-between gap-4"><dt class="text-slate-500">Estado</dt><dd class="font-semibold">Borrador</dd></div>
                   <div class="flex justify-between gap-4"><dt class="text-slate-500">Editable</dt><dd class="font-semibold text-green-700">Sí</dd></div>
-                  <div class="flex justify-between gap-4"><dt class="text-slate-500">Proyecto</dt><dd class="font-semibold">Pendiente</dd></div>
+                  <div class="flex justify-between gap-4"><dt class="text-slate-500">Proyectos asociados</dt><dd id="projectSummaryCount" class="font-semibold">0</dd></div>
                   <div class="flex justify-between gap-4"><dt class="text-slate-500">Ticket</dt><dd class="font-semibold text-slate-500">No aplica aún</dd></div>
                 </dl>
               </section>
@@ -601,8 +638,8 @@
                 <ul class="mt-4 space-y-3 text-sm text-slate-600">
                   <li>• Después de enviar a aprobación, no se puede editar.</li>
                   <li>• La cancelación solo aplica en borrador.</li>
-                  <li>• Al aprobarse, se intenta crear ticket.</li>
-                  <li>• El ticket queda ligado al presupuesto para análisis.</li>
+                  <li>• Al aprobarse, se intenta crear un ticket en Mesa de Ayuda.</li>
+                  <li>• El ticket queda ligado al presupuesto para trazabilidad y análisis.</li>
                 </ul>
               </section>
             </aside>
@@ -771,6 +808,7 @@
               <button data-tab="usersTab" class="admin-tab rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white">Gestión de usuarios</button>
               <button data-tab="rolesTab" class="admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">Permisos por usuario</button>
               <button data-tab="adminApprovalsTab" class="admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">Aprobaciones pendientes</button>
+              <button data-tab="catalogsTab" class="admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">Catálogos</button>
               <button data-tab="settingsTab" class="admin-tab rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">Configuración general</button>
             </div>
 
@@ -904,6 +942,31 @@
               </div>
             </div>
 
+
+            <div id="catalogsTab" class="admin-tab-panel">
+              <div class="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-center">
+                <div>
+                  <h3 class="text-lg font-semibold text-navy-900">Administración de catálogos</h3>
+                  <p class="mt-1 text-sm text-slate-500">Los formularios usan selección única y solo muestran registros activos.</p>
+                </div>
+                <button onclick="showToast('success','Catálogo actualizado','Los cambios quedaron disponibles para captura y carga masiva.')" class="rounded-2xl bg-navy-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-800">Guardar cambios</button>
+              </div>
+              <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Áreas</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Sistemas, Operaciones, Mantenimiento, Administración.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Centros de costo</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Código, nombre, área y estado activo/inactivo.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Periodos presupuestales</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">2026, 2027 y ventanas permitidas de captura.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Tipos de gasto</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">CAPEX y OPEX.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Categorías presupuestales</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Hardware, Software, Servicios y Otros.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Prioridades</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Alta, Media y Baja.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Monedas</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">MXN, USD, EUR y moneda base.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Ubicaciones</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Corporativo, CEDIS y sedes autorizadas.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Clientes internos</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Área usuaria o patrocinadora del proyecto.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Líderes de proyecto</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Usuarios activos habilitados como responsables.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Proveedores</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Proveedor estimado y estado activo/inactivo.</p></article>
+                <article class="rounded-3xl border border-slate-200 p-5"><div class="flex justify-between"><h4 class="font-semibold text-navy-900">Rubros de proyecto</h4><button class="text-sm font-semibold text-olive-700">+ Agregar</button></div><p class="mt-2 text-sm text-slate-500">Servicios, Software, Hardware y Otros.</p></article>
+              </div>
+            </div>
+
             <div id="settingsTab" class="admin-tab-panel">
               <h3 class="text-lg font-semibold text-navy-900">Configuración general</h3>
               <div class="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -912,18 +975,12 @@
                   <input value="https://api.mesa-ayuda.local/tickets" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
                 </div>
                 <div>
-                  <label class="mb-2 block text-sm font-medium text-slate-700">Modo de creación de ticket</label>
-                  <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
-                    <option>Automático al aprobar</option>
-                    <option>Manual por administrador</option>
-                  </select>
+                  <label class="mb-2 block text-sm font-medium text-slate-700">Regla de creación de ticket</label>
+                  <input readonly value="Automático al aprobar" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 outline-none" />
                 </div>
                 <div>
-                  <label class="mb-2 block text-sm font-medium text-slate-700">Política de edición</label>
-                  <select class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100">
-                    <option>Bloquear al enviar a aprobación</option>
-                    <option>Bloquear solo al aprobar</option>
-                  </select>
+                  <label class="mb-2 block text-sm font-medium text-slate-700">Regla de edición</label>
+                  <input readonly value="Bloquear al enviar a aprobación" class="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600 outline-none" />
                 </div>
                 <div>
                   <label class="mb-2 block text-sm font-medium text-slate-700">Integración Power BI</label>
@@ -943,100 +1000,61 @@
 
   <!-- PROJECT MODAL -->
   <div id="projectModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-navy-900/55 p-4">
-    <div class="max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-soft">
+    <div class="max-h-[94vh] w-full max-w-5xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-soft">
       <div class="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h3 class="text-2xl font-semibold text-navy-900">Registrar proyecto</h3>
-          <p class="mt-1 text-sm text-slate-500">Datos adicionales cuando el presupuesto está ligado a proyecto.</p>
-        </div>
+        <div><h3 class="text-2xl font-semibold text-navy-900">Agregar proyecto o servicio</h3><p class="mt-1 text-sm text-slate-500">Información de planeación del proyecto asociado. Los datos reales se actualizan posteriormente para seguimiento.</p></div>
         <button onclick="closeProjectModal()" class="rounded-2xl border border-slate-200 px-3 py-2 text-slate-500 hover:bg-slate-50">✕</button>
       </div>
-
-      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div class="md:col-span-2">
-          <label class="mb-2 block text-sm font-medium text-slate-700">Nombre del proyecto *</label>
-          <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Implementación de sistema de monitoreo" />
+      <section class="rounded-3xl border border-slate-200 p-5">
+        <h4 class="font-semibold text-navy-900">Identificación y responsables</h4>
+        <div class="mt-4 grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Fecha de elaboración / actualización *</label><input id="projectControlDate" type="date" value="2026-07-13" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" /></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Nombre del proyecto / servicio *</label><input id="projectName" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" placeholder="Sistema de monitoreo de cámaras" /></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Líder del proyecto *</label><select id="projectLeader" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"><option>María López</option><option>Michel Valencia</option><option>Juan Pérez</option></select></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Ubicación *</label><select id="projectLocation" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"><option>Área Corporativa</option><option>CEDIS Zamora</option><option>CEDIS Guadalajara</option></select></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Cliente del proyecto *</label><select id="projectClient" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"><option>Operaciones</option><option>Sistemas</option><option>Mantenimiento</option></select></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Proveedor estimado</label><select id="projectProvider" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"><option>Proveedor ABC</option><option>Proveedor por definir</option><option>Microsoft México</option></select></div>
         </div>
-        <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700">Valor estimado *</label>
-          <input value="520000" type="number" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
+      </section>
+      <section class="mt-5 rounded-3xl border border-slate-200 p-5">
+        <h4 class="font-semibold text-navy-900">Moneda, tipo de cambio y calendario</h4>
+        <div class="mt-4 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Moneda *</label><select id="projectCurrency" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm"><option>MXN</option><option>USD</option><option>EUR</option></select></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Tipo de cambio</label><input id="projectExchangeRate" type="number" step="0.0001" value="1" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" /></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Inicio planeado *</label><input id="projectStart" type="date" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" /></div>
+          <div><label class="mb-2 block text-sm font-medium text-slate-700">Cierre planeado *</label><input id="projectEnd" type="date" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" /></div>
         </div>
-        <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700">Proveedor estimado</label>
-          <input class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Proveedor ABC" />
-        </div>
-        <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700">Fecha propuesta inicio *</label>
-          <input type="date" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
-        </div>
-        <div>
-          <label class="mb-2 block text-sm font-medium text-slate-700">Fecha propuesta fin</label>
-          <input type="date" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" />
-        </div>
-      </div>
-
-      <div class="mt-6 rounded-3xl bg-slate-50 p-5">
-        <h4 class="font-semibold text-navy-900">Distribución estimada del costo</h4>
-        <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <input value="230000" type="number" class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Hardware" />
-          <input value="210000" type="number" class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Software" />
-          <input value="80000" type="number" class="rounded-2xl border border-slate-200 px-4 py-3 text-sm outline-none focus:ring-4 focus:ring-navy-100" placeholder="Servicios / otro" />
-        </div>
-        <div class="mt-4 grid grid-cols-1 gap-3 text-sm md:grid-cols-3">
-          <div class="rounded-2xl bg-white p-4"><p class="text-slate-500">Total distribuido</p><p class="font-semibold text-navy-900">$520,000</p></div>
-          <div class="rounded-2xl bg-white p-4"><p class="text-slate-500">Valor proyecto</p><p class="font-semibold text-navy-900">$520,000</p></div>
-          <div class="rounded-2xl bg-green-50 p-4"><p class="text-green-700">Diferencia</p><p class="font-semibold text-green-800">$0</p></div>
-        </div>
-      </div>
-
-      <div class="mt-6 flex justify-end gap-3">
-        <button onclick="closeProjectModal()" class="rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50">Cancelar</button>
-        <button onclick="closeProjectModal(); showToast('success','Proyecto registrado','El presupuesto quedó marcado como proyecto.')" class="rounded-2xl bg-olive-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-olive-700">Guardar proyecto</button>
-      </div>
+        <div class="mt-4 rounded-2xl bg-blue-50 p-4 text-sm text-blue-800">Las fechas reales, el valor real y los importes reales por rubro se actualizan durante la ejecución o mediante la relación con órdenes de compra.</div>
+      </section>
+      <section class="mt-5 rounded-3xl bg-slate-50 p-5">
+        <div class="flex flex-col justify-between gap-2 md:flex-row md:items-end"><div><h4 class="font-semibold text-navy-900">Recursos económicos del proyecto</h4><p class="text-sm text-slate-500">Importes planeados por rubro, sin líneas de conceptos.</p></div><div class="w-full md:w-56"><label class="mb-2 block text-sm font-medium text-slate-700">Presupuesto total *</label><input id="projectValue" value="520000" type="number" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" /></div></div>
+        <div class="mt-5 overflow-x-auto"><table class="min-w-[700px] w-full text-left text-sm"><thead><tr class="text-xs uppercase text-slate-500"><th class="px-3 py-2">Rubro</th><th class="px-3 py-2">Planeado</th><th class="px-3 py-2">Real</th><th class="px-3 py-2">Variación</th></tr></thead><tbody class="divide-y divide-slate-200">
+          <tr><td class="px-3 py-3 font-semibold">Servicios</td><td class="px-3 py-3"><input id="projectServices" type="number" value="80000" class="w-full rounded-xl border border-slate-200 px-3 py-2" /></td><td class="px-3 py-3"><input disabled value="Pendiente" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-400" /></td><td class="px-3 py-3 text-slate-400">Pendiente</td></tr>
+          <tr><td class="px-3 py-3 font-semibold">Software</td><td class="px-3 py-3"><input id="projectSoftware" type="number" value="210000" class="w-full rounded-xl border border-slate-200 px-3 py-2" /></td><td class="px-3 py-3"><input disabled value="Pendiente" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-400" /></td><td class="px-3 py-3 text-slate-400">Pendiente</td></tr>
+          <tr><td class="px-3 py-3 font-semibold">Hardware</td><td class="px-3 py-3"><input id="projectHardware" type="number" value="230000" class="w-full rounded-xl border border-slate-200 px-3 py-2" /></td><td class="px-3 py-3"><input disabled value="Pendiente" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-400" /></td><td class="px-3 py-3 text-slate-400">Pendiente</td></tr>
+          <tr><td class="px-3 py-3 font-semibold">Otros</td><td class="px-3 py-3"><input id="projectOther" type="number" value="0" class="w-full rounded-xl border border-slate-200 px-3 py-2" /></td><td class="px-3 py-3"><input disabled value="Pendiente" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-400" /></td><td class="px-3 py-3 text-slate-400">Pendiente</td></tr>
+        </tbody></table></div>
+      </section>
+      <section class="mt-5 rounded-3xl border border-slate-200 p-5"><label class="mb-2 block text-sm font-medium text-slate-700">Observaciones</label><textarea id="projectNotes" rows="3" class="w-full rounded-2xl border border-slate-200 px-4 py-3 text-sm" placeholder="Fuente y fecha del tipo de cambio, cambios de alcance, riesgos o acuerdos."></textarea></section>
+      <div class="mt-6 flex justify-end gap-3"><button onclick="closeProjectModal()" class="rounded-2xl border border-slate-200 px-4 py-2.5 text-sm font-semibold hover:bg-slate-50">Cancelar</button><button onclick="addProject()" class="rounded-2xl bg-olive-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-olive-700">Agregar proyecto</button></div>
     </div>
   </div>
 
   <!-- BUDGET DETAIL MODAL -->
   <div id="budgetDetailModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-navy-900/55 p-4">
-    <div class="max-h-[92vh] w-full max-w-4xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-soft">
-      <div class="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h3 class="text-2xl font-semibold text-navy-900">Presupuesto PRE-0023</h3>
-          <p class="mt-1 text-sm text-slate-500">Vista solo lectura por estado aprobado.</p>
-        </div>
-        <button onclick="closeBudgetDetail()" class="rounded-2xl border border-slate-200 px-3 py-2 text-slate-500 hover:bg-slate-50">✕</button>
-      </div>
-
-      <div class="grid grid-cols-1 gap-5 md:grid-cols-2">
-        <div class="rounded-3xl border border-slate-200 p-5">
-          <h4 class="font-semibold text-navy-900">Información general</h4>
-          <dl class="mt-4 space-y-3 text-sm">
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Área</dt><dd class="font-semibold">Operaciones</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Concepto</dt><dd class="font-semibold">Monitoreo cámaras</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Monto</dt><dd class="font-semibold">$520,000</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Estado</dt><dd><span class="rounded-full bg-green-50 px-3 py-1 text-xs font-semibold text-green-700">Aprobado</span></dd></div>
-          </dl>
-        </div>
-
-        <div class="rounded-3xl border border-slate-200 p-5">
-          <h4 class="font-semibold text-navy-900">Ticket Mesa de Ayuda</h4>
-          <dl class="mt-4 space-y-3 text-sm">
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Ticket</dt><dd class="font-semibold">HD-88921</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Estado</dt><dd class="font-semibold text-blue-700">Abierto</dd></div>
-            <div class="flex justify-between gap-4"><dt class="text-slate-500">Fecha</dt><dd class="font-semibold">07/07/2026</dd></div>
-          </dl>
-          <button onclick="showToast('info','Mesa de Ayuda','Apertura simulada del ticket HD-88921.')" class="mt-5 rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">Ver ticket</button>
-        </div>
-
-        <div class="rounded-3xl border border-slate-200 p-5 md:col-span-2">
-          <h4 class="font-semibold text-navy-900">Proyecto asociado</h4>
-          <div class="mt-4 grid grid-cols-1 gap-4 text-sm md:grid-cols-4">
-            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Valor estimado</p><p class="font-semibold">$520,000</p></div>
-            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Valor real</p><p class="font-semibold">$430,000</p></div>
-            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Hardware</p><p class="font-semibold">$230,000</p></div>
-            <div class="rounded-2xl bg-slate-50 p-4"><p class="text-slate-500">Software</p><p class="font-semibold">$210,000</p></div>
+    <div class="max-h-[94vh] w-full max-w-6xl overflow-y-auto rounded-[2rem] bg-white p-6 shadow-soft">
+      <div class="mb-6 flex items-start justify-between gap-4"><div><h3 class="text-2xl font-semibold text-navy-900">Presupuesto PRE-0023</h3><p class="mt-1 text-sm text-slate-500">Vista integral de solo lectura por estado aprobado.</p></div><button onclick="closeBudgetDetail()" class="rounded-2xl border border-slate-200 px-3 py-2 text-slate-500 hover:bg-slate-50">✕</button></div>
+      <div class="grid grid-cols-1 gap-5 lg:grid-cols-3">
+        <section class="rounded-3xl border border-slate-200 p-5 lg:col-span-2"><h4 class="font-semibold text-navy-900">Información general</h4><dl class="mt-4 grid grid-cols-1 gap-3 text-sm md:grid-cols-2"><div><dt class="text-slate-500">Área</dt><dd class="font-semibold">Operaciones</dd></div><div><dt class="text-slate-500">Centro de costo</dt><dd class="font-semibold">CC-2204</dd></div><div><dt class="text-slate-500">Concepto</dt><dd class="font-semibold">Monitoreo cámaras</dd></div><div><dt class="text-slate-500">Monto</dt><dd class="font-semibold">$520,000 MXN</dd></div><div><dt class="text-slate-500">Responsable</dt><dd class="font-semibold">Michel Valencia</dd></div><div><dt class="text-slate-500">Fecha de captura</dt><dd class="font-semibold">05/07/2026</dd></div><div class="md:col-span-2"><dt class="text-slate-500">Justificación</dt><dd class="font-semibold">Actualizar la infraestructura de seguridad y supervisión operativa.</dd></div></dl></section>
+        <section class="rounded-3xl border border-slate-200 p-5"><h4 class="font-semibold text-navy-900">Ticket Mesa de Ayuda</h4><dl class="mt-4 space-y-3 text-sm"><div class="flex justify-between"><dt class="text-slate-500">Ticket</dt><dd class="font-semibold">HD-88921</dd></div><div class="flex justify-between"><dt class="text-slate-500">Estado</dt><dd class="font-semibold text-blue-700">Abierto</dd></div><div class="flex justify-between"><dt class="text-slate-500">Fecha</dt><dd class="font-semibold">07/07/2026</dd></div></dl><button onclick="showToast('info','Mesa de Ayuda','Apertura simulada del ticket HD-88921.')" class="mt-5 rounded-2xl border border-slate-200 px-4 py-2 text-sm font-semibold hover:bg-slate-50">Ver ticket</button></section>
+        <section class="rounded-3xl border border-slate-200 p-5 lg:col-span-3"><div class="flex items-center justify-between"><div><h4 class="font-semibold text-navy-900">Proyectos asociados</h4><p class="text-sm text-slate-500">Planeación, ejecución y variaciones por proyecto.</p></div><span class="rounded-full bg-olive-50 px-3 py-1 text-xs font-semibold text-olive-700">2 proyectos</span></div>
+          <div class="mt-4 space-y-5">
+            <article class="rounded-3xl bg-slate-50 p-5"><div class="flex flex-col justify-between gap-3 md:flex-row"><div><h5 class="font-semibold text-navy-900">Sistema de monitoreo de cámaras</h5><p class="mt-1 text-sm text-slate-500">Líder: María López · Cliente: Operaciones · Ubicación: CEDIS Zamora</p></div><span class="font-semibold text-navy-900">$320,000 MXN</span></div><div class="mt-4 grid grid-cols-2 gap-3 text-sm md:grid-cols-4"><div><p class="text-slate-500">Inicio plan / real</p><p class="font-semibold">15/07 / 18/07</p></div><div><p class="text-slate-500">Cierre plan / real</p><p class="font-semibold">30/09 / Pendiente</p></div><div><p class="text-slate-500">Tipo de cambio</p><p class="font-semibold">1.0000 MXN</p></div><div><p class="text-slate-500">Valor real</p><p class="font-semibold">$274,000</p></div></div><div class="mt-4 overflow-x-auto"><table class="min-w-[620px] w-full text-sm"><thead><tr class="text-left text-xs uppercase text-slate-500"><th class="py-2">Rubro</th><th>Plan</th><th>Real</th><th>Variación</th></tr></thead><tbody><tr><td class="py-2">Servicios</td><td>$40,000</td><td>$38,000</td><td class="text-green-700">-$2,000</td></tr><tr><td class="py-2">Software</td><td>$80,000</td><td>$76,000</td><td class="text-green-700">-$4,000</td></tr><tr><td class="py-2">Hardware</td><td>$200,000</td><td>$160,000</td><td class="text-green-700">-$40,000</td></tr><tr><td class="py-2">Otros</td><td>$0</td><td>$0</td><td>$0</td></tr></tbody></table></div><p class="mt-4 text-sm text-slate-600"><span class="font-semibold">Observaciones:</span> El valor real se obtiene de OC relacionadas y se actualizará al cierre.</p></article>
+            <article class="rounded-3xl bg-slate-50 p-5"><div class="flex flex-col justify-between gap-3 md:flex-row"><div><h5 class="font-semibold text-navy-900">Adecuación de infraestructura</h5><p class="mt-1 text-sm text-slate-500">Líder: Juan Pérez · Cliente: Operaciones · Ubicación: CEDIS Zamora</p></div><span class="font-semibold text-navy-900">$200,000 MXN</span></div><p class="mt-4 text-sm text-slate-600">Inicio planeado 01/08/2026 · Cierre planeado 15/10/2026 · Proveedor por definir · Sin datos reales aún.</p></article>
           </div>
-        </div>
+        </section>
+        <section class="rounded-3xl border border-slate-200 p-5 lg:col-span-2"><h4 class="font-semibold text-navy-900">Historial y trazabilidad</h4><div class="mt-4 space-y-3 text-sm"><div class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-blue-500"></span><p><span class="font-semibold">Creado</span> por Michel Valencia · 05/07/2026 10:18</p></div><div class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-yellow-500"></span><p><span class="font-semibold">Enviado a aprobación</span> · 06/07/2026 09:05</p></div><div class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-green-500"></span><p><span class="font-semibold">Aprobado</span> por María López · 07/07/2026 11:40</p></div><div class="flex gap-3"><span class="mt-1 h-2.5 w-2.5 rounded-full bg-olive-500"></span><p><span class="font-semibold">Ticket generado</span> HD-88921 · 07/07/2026 11:41</p></div></div></section>
+        <section class="rounded-3xl border border-slate-200 p-5"><h4 class="font-semibold text-navy-900">Formalización digital</h4><dl class="mt-4 space-y-3 text-sm"><div><dt class="text-slate-500">Presentado por</dt><dd class="font-semibold">Michel Valencia</dd></div><div><dt class="text-slate-500">Autorizado por</dt><dd class="font-semibold">María López</dd></div><div><dt class="text-slate-500">Copia / conocimiento</dt><dd class="font-semibold">Gerencia de Operaciones</dd></div></dl><p class="mt-4 text-xs text-slate-500">La trazabilidad del sistema sustituye firmas manuscritas en el MVP.</p></section>
       </div>
     </div>
   </div>
@@ -1134,6 +1152,52 @@
       document.getElementById('approvalFolio').textContent = folio;
       document.getElementById('approvalProject').textContent = project ? 'Sí' : 'No';
       showToast('info', 'Presupuesto seleccionado', `${folio} cargado para revisión.`);
+    }
+
+    const associatedProjects = [];
+
+    function addProject() {
+      const name = document.getElementById('projectName').value.trim() || 'Proyecto sin nombre';
+      const value = Number(document.getElementById('projectValue').value || 0);
+      const provider = document.getElementById('projectProvider').value || 'Proveedor por definir';
+      const start = document.getElementById('projectStart').value || 'Sin fecha';
+      const end = document.getElementById('projectEnd').value || 'Sin fecha';
+      const leader = document.getElementById('projectLeader').value;
+      const location = document.getElementById('projectLocation').value;
+      associatedProjects.push({ name, value, provider, start, end, leader, location });
+      renderAssociatedProjects();
+      closeProjectModal();
+      showToast('success','Proyecto agregado',`${name} quedó asociado al presupuesto.`);
+    }
+
+    function removeProject(index) {
+      const removed = associatedProjects.splice(index, 1)[0];
+      renderAssociatedProjects();
+      showToast('warning', 'Proyecto retirado', `${removed.name} dejó de estar asociado.`);
+    }
+
+    function renderAssociatedProjects() {
+      const section = document.getElementById('associatedProjectsSection');
+      const list = document.getElementById('associatedProjectsList');
+      const badge = document.getElementById('associatedProjectsBadge');
+      const summary = document.getElementById('projectSummaryCount');
+      const count = associatedProjects.length;
+
+      section.classList.toggle('hidden', count === 0);
+      badge.textContent = `${count} ${count === 1 ? 'proyecto' : 'proyectos'}`;
+      summary.textContent = count;
+      list.innerHTML = associatedProjects.map((project, index) => `
+        <article class="flex flex-col justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-4 md:flex-row md:items-center">
+          <div>
+            <p class="font-semibold text-navy-900">${project.name}</p>
+            <p class="mt-1 text-sm text-slate-500">${project.provider} · ${project.start}${project.end ? ` a ${project.end}` : ''}</p>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="font-semibold text-navy-900">${project.value.toLocaleString('es-MX', { style: 'currency', currency: 'MXN' })}</span>
+            <button type="button" onclick="removeProject(${index})" class="rounded-xl border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-100">Quitar</button>
+          </div>
+        </article>
+      `).join('');
     }
 
     function showToast(type, title, message) {
